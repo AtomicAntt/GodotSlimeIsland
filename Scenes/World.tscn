@@ -1,0 +1,560 @@
+[gd_scene load_steps=40 format=2]
+
+[ext_resource path="res://GameObjects/GrassHillWater.tres" type="TileSet" id=1]
+[ext_resource path="res://Assets/PlayerHuman-1.png.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/World.gd" type="Script" id=4]
+[ext_resource path="res://GameObjects/Button.tres" type="Theme" id=5]
+[ext_resource path="res://GameObjects/BushSlime.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Heart.png" type="Texture" id=7]
+[ext_resource path="res://Assets/HumanFist.png" type="Texture" id=8]
+[ext_resource path="res://Assets/UnderHealthBar.png" type="Texture" id=9]
+[ext_resource path="res://Assets/ProgressHealthBar.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Fonts/Silkscreen/Silkscreen-Regular.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://Assets/Wood.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Berries.png" type="Texture" id=13]
+[ext_resource path="res://Assets/InventorySlotPixel.png" type="Texture" id=14]
+[ext_resource path="res://Assets/WoodSwordPixel.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Music/the tracks that lead astray chiptune ver.wav" type="AudioStream" id=16]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4.5, 6 )
+
+[sub_resource type="Animation" id=12]
+resource_name = "Hurt"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Punch"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Hand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 10, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Hand:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:handRadius")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 12 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Walk"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.101, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 10.0, 0.0, 0.0, -10.0, 0.0, 10.0, 0.0, -10.0, 0.0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 2, 2 )
+
+[sub_resource type="Animation" id=13]
+resource_name = "Hurt"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=22]
+extents = Vector2( 10, 4 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 8
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=15]
+default_font = SubResource( 14 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 8
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=17]
+default_font = SubResource( 16 )
+
+[sub_resource type="DynamicFont" id=18]
+size = 8
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=19]
+default_font = SubResource( 18 )
+
+[sub_resource type="DynamicFont" id=20]
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=21]
+default_font = SubResource( 20 )
+
+[sub_resource type="DynamicFont" id=25]
+size = 8
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=26]
+default_font = SubResource( 25 )
+
+[sub_resource type="DynamicFont" id=27]
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=28]
+default_font = SubResource( 27 )
+
+[sub_resource type="DynamicFont" id=29]
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=30]
+default_font = SubResource( 29 )
+
+[node name="World" type="Node2D" groups=["world"]]
+position = Vector2( 419, 144 )
+script = ExtResource( 4 )
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2( 3, 0 )
+z_index = -1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 2
+collision_mask = 3
+format = 1
+tile_data = PoolIntArray( 6291554, 0, 7, 6291555, 0, 196612, 6291556, 0, 196612, 6291557, 0, 8, 6357089, 0, 7, 6357090, 0, 196609, 6357091, 0, 327689, 6357092, 0, 262153, 6357093, 0, 196608, 6357094, 0, 8, 6422624, 0, 7, 6422625, 0, 196609, 6422626, 0, 327689, 6422627, 0, 327688, 6422628, 0, 327689, 6422629, 0, 131078, 6422630, 0, 196608, 6422631, 0, 8, 6488160, 0, 131076, 6488161, 0, 262153, 6488162, 0, 131078, 6488163, 0, 262153, 6488164, 0, 327688, 6488165, 0, 327689, 6488166, 0, 131078, 6488167, 0, 9, 6553696, 0, 65545, 6553697, 0, 262153, 6553698, 0, 327689, 6553699, 0, 262153, 6553700, 0, 262153, 6553701, 0, 327689, 6553702, 0, 327688, 6553703, 0, 131077, 6619232, 0, 65543, 6619233, 0, 131073, 6619234, 0, 131078, 6619235, 0, 327688, 6619236, 0, 327689, 6619237, 0, 262153, 6619238, 0, 131072, 6619239, 0, 65544, 6684769, 0, 65543, 6684770, 0, 131073, 6684771, 0, 262153, 6684772, 0, 262153, 6684773, 0, 131072, 6684774, 0, 65544, 6750306, 0, 65543, 6750307, 0, 196617, 6750308, 0, 196613, 6750309, 0, 65544 )
+
+[node name="Player" type="KinematicBody2D" parent="." groups=["player"]]
+position = Vector2( 1604, 1599 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0.5, 4 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+anims/Hurt = SubResource( 12 )
+anims/Idle = SubResource( 9 )
+anims/Punch = SubResource( 10 )
+anims/RESET = SubResource( 8 )
+anims/Walk = SubResource( 7 )
+
+[node name="Hand" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Hand"]
+position = Vector2( 10, 5 )
+shape = SubResource( 11 )
+
+[node name="Fist" type="Sprite" parent="Player/Hand"]
+position = Vector2( 10, 5 )
+texture = ExtResource( 8 )
+
+[node name="HurtAnimationPlayer" type="AnimationPlayer" parent="Player"]
+anims/Hurt = SubResource( 13 )
+
+[node name="HungerTimer" type="Timer" parent="Player"]
+autostart = true
+
+[node name="Sword" type="Area2D" parent="Player"]
+visible = false
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Sword"]
+position = Vector2( 18, 5 )
+shape = SubResource( 22 )
+
+[node name="Sword" type="Sprite" parent="Player/Sword"]
+position = Vector2( 16, 6 )
+rotation = 1.5708
+texture = ExtResource( 15 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+pause_mode = 2
+
+[node name="Main" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PlayerUI" type="Control" parent="CanvasLayer/Main"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/PlayerUI"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 1.5, 1.5 )
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/Main/PlayerUI/VBoxContainer"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 84.0
+margin_bottom = 11.0
+theme = SubResource( 15 )
+text = "Health"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main/PlayerUI/VBoxContainer"]
+margin_top = 15.0
+margin_right = 84.0
+margin_bottom = 31.0
+custom_constants/separation = 1
+
+[node name="Heart1" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/VBoxContainer/HBoxContainer"]
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 7 )
+
+[node name="Heart2" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/VBoxContainer/HBoxContainer"]
+margin_left = 17.0
+margin_right = 33.0
+margin_bottom = 16.0
+texture = ExtResource( 7 )
+
+[node name="Heart3" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/VBoxContainer/HBoxContainer"]
+margin_left = 34.0
+margin_right = 50.0
+margin_bottom = 16.0
+texture = ExtResource( 7 )
+
+[node name="Heart4" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/VBoxContainer/HBoxContainer"]
+margin_left = 51.0
+margin_right = 67.0
+margin_bottom = 16.0
+texture = ExtResource( 7 )
+
+[node name="Heart5" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/VBoxContainer/HBoxContainer"]
+margin_left = 68.0
+margin_right = 84.0
+margin_bottom = 16.0
+texture = ExtResource( 7 )
+
+[node name="HungerLabel" type="Label" parent="CanvasLayer/Main/PlayerUI/VBoxContainer"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 35.0
+margin_right = 84.0
+margin_bottom = 46.0
+theme = SubResource( 15 )
+text = "Hunger"
+
+[node name="TextureProgress" type="TextureProgress" parent="CanvasLayer/Main/PlayerUI/VBoxContainer"]
+margin_top = 50.0
+margin_right = 84.0
+margin_bottom = 66.0
+value = 100.0
+texture_under = ExtResource( 9 )
+texture_progress = ExtResource( 10 )
+tint_progress = Color( 1, 0.654902, 0, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main/PlayerUI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -66.0
+margin_top = -37.0
+margin_right = -31.0
+margin_bottom = -16.0
+rect_scale = Vector2( 2, 2 )
+theme = SubResource( 17 )
+
+[node name="WoodCount" type="Label" parent="CanvasLayer/Main/PlayerUI/HBoxContainer"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 5.0
+margin_right = 6.0
+margin_bottom = 16.0
+text = "0"
+
+[node name="Wood" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/HBoxContainer"]
+margin_left = 10.0
+margin_right = 26.0
+margin_bottom = 21.0
+texture = ExtResource( 12 )
+
+[node name="Inventory" type="HBoxContainer" parent="CanvasLayer/Main/PlayerUI"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
+margin_right = 76.0
+rect_scale = Vector2( 2, 2 )
+theme = SubResource( 19 )
+
+[node name="Slot1" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/Inventory"]
+margin_right = 16.0
+margin_bottom = 40.0
+texture = ExtResource( 14 )
+
+[node name="Sword" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/Inventory/Slot1"]
+visible = false
+margin_left = -7.0
+margin_top = -8.0
+margin_right = 25.0
+margin_bottom = 24.0
+texture = ExtResource( 15 )
+
+[node name="Slot2" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/Inventory"]
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 40.0
+texture = ExtResource( 14 )
+
+[node name="Slot3" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/Inventory"]
+margin_left = 40.0
+margin_right = 56.0
+margin_bottom = 40.0
+texture = ExtResource( 14 )
+
+[node name="Slot4" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/Inventory"]
+margin_left = 60.0
+margin_right = 76.0
+margin_bottom = 40.0
+texture = ExtResource( 14 )
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/Inventory/Slot4"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 13 )
+
+[node name="FoodLabel" type="Label" parent="CanvasLayer/Main/PlayerUI/Inventory/Slot4"]
+margin_left = -1.0
+margin_top = 8.0
+margin_right = 11.0
+margin_bottom = 22.0
+text = "0"
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Main/PlayerUI"]
+modulate = Color( 0, 0, 0, 1 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -149.0
+margin_right = -4.0
+margin_bottom = 21.0
+theme = SubResource( 21 )
+text = "Score:"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Main/PlayerUI"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -56.0
+margin_top = -29.5
+margin_bottom = 29.5
+custom_constants/separation = -5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Main/PlayerUI/VBoxContainer2"]
+margin_right = 56.0
+margin_bottom = 16.0
+theme = SubResource( 26 )
+alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Main/PlayerUI/VBoxContainer2/HBoxContainer"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 12.0
+margin_top = 2.0
+margin_right = 23.0
+margin_bottom = 13.0
+text = "10"
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/VBoxContainer2/HBoxContainer"]
+margin_left = 27.0
+margin_right = 43.0
+margin_bottom = 16.0
+texture = ExtResource( 12 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Main/PlayerUI/VBoxContainer2"]
+margin_top = 11.0
+margin_right = 56.0
+margin_bottom = 43.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Main/PlayerUI/VBoxContainer2/HBoxContainer2"]
+margin_left = 12.0
+margin_right = 44.0
+margin_bottom = 32.0
+texture = ExtResource( 15 )
+
+[node name="Button" type="Button" parent="CanvasLayer/Main/PlayerUI/VBoxContainer2"]
+margin_top = 38.0
+margin_right = 56.0
+margin_bottom = 53.0
+focus_mode = 0
+theme = ExtResource( 5 )
+enabled_focus_mode = 0
+text = "Craft"
+
+[node name="GameOver" type="Control" parent="CanvasLayer/Main"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -320.0
+margin_top = -180.0
+margin_right = 320.0
+margin_bottom = 180.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Main/GameOver"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.188235 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Main/GameOver"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -55.0
+margin_top = -20.0
+margin_right = 55.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Main/GameOver/VBoxContainer"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 110.0
+margin_bottom = 21.0
+theme = SubResource( 28 )
+text = "GAME OVER!"
+
+[node name="Quit" type="Button" parent="CanvasLayer/Main/GameOver/VBoxContainer"]
+margin_top = 25.0
+margin_right = 110.0
+margin_bottom = 40.0
+theme = ExtResource( 5 )
+text = "Quit To Menu"
+
+[node name="newhi" type="Label" parent="CanvasLayer/Main/GameOver"]
+visible = false
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 342.0
+margin_top = 108.0
+margin_right = 494.0
+margin_bottom = 139.0
+rect_rotation = 22.4393
+theme = SubResource( 30 )
+text = "New Highscore!"
+
+[node name="BushSlime" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1576, 1589 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+volume_db = -5.0
+autoplay = true
+
+[connection signal="area_entered" from="Player/Hand" to="Player" method="_on_Hand_area_entered"]
+[connection signal="area_exited" from="Player/Hand" to="Player" method="_on_Hand_area_exited"]
+[connection signal="animation_finished" from="Player/HurtAnimationPlayer" to="Player" method="_on_HurtAnimationPlayer_animation_finished"]
+[connection signal="timeout" from="Player/HungerTimer" to="Player" method="_on_HungerTimer_timeout"]
+[connection signal="area_entered" from="Player/Sword" to="Player" method="_on_Sword_area_entered"]
+[connection signal="area_exited" from="Player/Sword" to="Player" method="_on_Sword_area_exited"]
+[connection signal="pressed" from="CanvasLayer/Main/PlayerUI/VBoxContainer2/Button" to="Player" method="_on_Button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Main/GameOver/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
